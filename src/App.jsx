@@ -8,7 +8,6 @@ import SingleView from './components/SingleView';
 import Cart from './components/Cart';
 import Orders from './components/Orders';
 import { CartProvider } from './state/CartProvider';
-import productData from './data/full-products';
 
 function App() {
   return (
@@ -18,8 +17,8 @@ function App() {
         <Routes>
           <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
-          <Route path="/" element={<CardList data={productData} />} />
-           <Route path="/product/:id" element={<SingleView data={productData} />} />
+          <Route path="/" element={<CardList />} />
+          <Route path="/product/:id" element={<SingleView />} />
         </Routes>
       </CartProvider>
     </div>

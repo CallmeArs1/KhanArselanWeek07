@@ -1,10 +1,9 @@
 
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../App.css';
 import { BASE_URL } from '../config';
-import AddToCart from './AddToCart';
+import AddToCart from './AddToCart'; 
 
 export default function SingleView() {
   const { id } = useParams();
@@ -41,9 +40,10 @@ export default function SingleView() {
         </div>
       </div>
       <div className="pa3 flex justify-end">
-  <span className="ma2 f4">${product.price}</span>
-  <AddToCart product={product} />
-</div>
+        <span className="ma2 f4">${product.price}</span>
+        {/* Use the AddToCart component and pass the product */}
+        <AddToCart product={product} />
+      </div>
       <div className="aspect-ratio aspect-ratio--4x3">
         <div
           className="aspect-ratio--object cover"
@@ -57,10 +57,6 @@ export default function SingleView() {
         </div>
         <div className="gray db pv2">&hearts;<span>{product.likes}</span></div>
       </div>
-      <div className="pa3 flex justify-end">
-  <span className="ma2 f4">${product.price}</span>
-  <AddToCart product={product} />
-</div>
     </article>
   );
 }

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import Card from './Card';
 import Button from './Button';
@@ -7,46 +5,61 @@ import Search from './Search';
 import { BASE_URL } from '../config';
 
 const CardList = () => {
-  const limit = 10;
-  const [offset, setOffset] = useState(0);
-  const [products, setProducts] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(''); // State for search/filter query
+  const limit = 10; 
+  const [offset, setOffset] = useState(0); 
+  const [products, setProducts] = useState([]); 
+  const [searchQuery, setSearchQuery] = useState(''); 
 
-  // Fetch products from API
   const fetchProducts = async () => {
     try {
       const response = await fetch(`${BASE_URL}/products?offset=${offset}&limit=${limit}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
       const data = await response.json();
-      setProducts(data);
+      setProducts(data); 
     } catch (err) {
       console.error('Error fetching products:', err);
     }
   };
 
-  // Filter products based on search query
-  const filterProducts = async () => {
+    const filterProducts = async () => {
     try {
       const response = await fetch(`${BASE_URL}/products?query=${searchQuery}`);
+      if (!response.ok) {
+        throw new Error('Failed to filter products');
+      }
       const data = await response.json();
-      setProducts(data); // Update state with filtered products
+      setProducts(data); 
     } catch (err) {
       console.error('Error filtering products:', err);
     }
   };
 
-
+  
   useEffect(() => {
     if (searchQuery) {
-      filterProducts();
+      filterProducts(); 
     } else {
-      fetchProducts();
+      fetchProducts(); 
     }
-  }, [offset, searchQuery]);
+  }, [offset, searchQuery]); 
 
-  
+ 
   const handleSearch = (query) => {
-    setSearchQuery(query); // Update search query
-    setOffset(0); // Reset pagination when searching
+    setSearchQuery(query); 
+    setOffset(0); 
+  };
+
+  const handlePrevious = () => {
+    if (offset > 0) {
+      setOffset(offset - limit);
+    }
+  };
+
+ 
+  const handleNext = () => {
+    setOffset(offset + limit);
   };
 
   return (
@@ -61,8 +74,8 @@ const CardList = () => {
       </div>
       <div className="flex items-center justify-center pa4">
         {/* Pagination Buttons */}
-        <Button text="Previous" handleClick={() => setOffset(Math.max(0, offset - limit))} />
-        <Button text="Next" handleClick={() => setOffset(offset + limit)} />
+        <Button text="Previous" handleClick={handlePrevious} />
+        <Button text="Next" handleClick={handleNext} />
       </div>
     </div>
   );
